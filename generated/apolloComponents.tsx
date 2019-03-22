@@ -92,6 +92,12 @@ export interface RegisterInput {
   password: string;
 }
 
+export interface PaginationInput {
+  skip: number;
+
+  take: number;
+}
+
 /** The javascript `Date` as string. Type represents date and time as the ISO Date string. */
 export type DateTime = any;
 
@@ -111,6 +117,33 @@ export type LoginMutation = {
 };
 
 export type LoginLogin = {
+  __typename?: "User";
+
+  id: string;
+
+  email: string;
+
+  firstName: string;
+
+  lastName: string;
+
+  fullName: string;
+};
+
+export type RegisterVariables = {
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+};
+
+export type RegisterMutation = {
+  __typename?: "Mutation";
+
+  register: RegisterRegister;
+};
+
+export type RegisterRegister = {
   __typename?: "User";
 
   id: string;
@@ -179,4 +212,64 @@ export function LoginHOC<TProps, TChildProps = any>(
     LoginVariables,
     LoginProps<TChildProps>
   >(LoginDocument, operationOptions);
+}
+export const RegisterDocument = gql`
+  mutation Register(
+    $email: String!
+    $password: String!
+    $firstName: String!
+    $lastName: String!
+  ) {
+    register(
+      data: {
+        email: $email
+        password: $password
+        firstName: $firstName
+        lastName: $lastName
+      }
+    ) {
+      id
+      email
+      firstName
+      lastName
+      fullName
+    }
+  }
+`;
+export class RegisterComponent extends React.Component<
+  Partial<ReactApollo.MutationProps<RegisterMutation, RegisterVariables>>
+> {
+  render() {
+    return (
+      <ReactApollo.Mutation<RegisterMutation, RegisterVariables>
+        mutation={RegisterDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type RegisterProps<TChildProps = any> = Partial<
+  ReactApollo.MutateProps<RegisterMutation, RegisterVariables>
+> &
+  TChildProps;
+export type RegisterMutationFn = ReactApollo.MutationFn<
+  RegisterMutation,
+  RegisterVariables
+>;
+export function RegisterHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        RegisterMutation,
+        RegisterVariables,
+        RegisterProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    RegisterMutation,
+    RegisterVariables,
+    RegisterProps<TChildProps>
+  >(RegisterDocument, operationOptions);
 }
