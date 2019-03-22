@@ -105,6 +105,30 @@ export type DateTime = any;
 // Documents
 // ====================================================
 
+export type ConfirmEmailVariables = {
+  token: string;
+};
+
+export type ConfirmEmailMutation = {
+  __typename?: "Mutation";
+
+  confirmEmail: ConfirmEmailConfirmEmail;
+};
+
+export type ConfirmEmailConfirmEmail = {
+  __typename?: "User";
+
+  id: string;
+
+  email: string;
+
+  firstName: string;
+
+  lastName: string;
+
+  fullName: string;
+};
+
 export type LoginVariables = {
   email: string;
   password: string;
@@ -165,6 +189,56 @@ import * as ReactApollo from "react-apollo";
 // Components
 // ====================================================
 
+export const ConfirmEmailDocument = gql`
+  mutation ConfirmEmail($token: String!) {
+    confirmEmail(token: $token) {
+      id
+      email
+      firstName
+      lastName
+      fullName
+    }
+  }
+`;
+export class ConfirmEmailComponent extends React.Component<
+  Partial<
+    ReactApollo.MutationProps<ConfirmEmailMutation, ConfirmEmailVariables>
+  >
+> {
+  render() {
+    return (
+      <ReactApollo.Mutation<ConfirmEmailMutation, ConfirmEmailVariables>
+        mutation={ConfirmEmailDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type ConfirmEmailProps<TChildProps = any> = Partial<
+  ReactApollo.MutateProps<ConfirmEmailMutation, ConfirmEmailVariables>
+> &
+  TChildProps;
+export type ConfirmEmailMutationFn = ReactApollo.MutationFn<
+  ConfirmEmailMutation,
+  ConfirmEmailVariables
+>;
+export function ConfirmEmailHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        ConfirmEmailMutation,
+        ConfirmEmailVariables,
+        ConfirmEmailProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    ConfirmEmailMutation,
+    ConfirmEmailVariables,
+    ConfirmEmailProps<TChildProps>
+  >(ConfirmEmailDocument, operationOptions);
+}
 export const LoginDocument = gql`
   mutation Login($email: String!, $password: String!) {
     login(data: { email: $email, password: $password }) {
