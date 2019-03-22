@@ -35,7 +35,7 @@ const register: React.FC = () => {
           <Formik
             validationSchema={RegisterSchema}
             validateOnBlur={false}
-            onSubmit={async (data, { setErrors }) => {
+            onSubmit={async (data, { setErrors, setSubmitting }) => {
               try {
                 const res = await register({ variables: data });
                 console.log(res);
@@ -50,6 +50,7 @@ const register: React.FC = () => {
                 setErrors(errors);
                 console.log(errors);
               }
+              setSubmitting(false);
             }}
             initialValues={{
               email: '',
@@ -58,7 +59,7 @@ const register: React.FC = () => {
               password: '',
             }}
           >
-            {({ handleSubmit }) => (
+            {({ handleSubmit, isSubmitting }) => (
               <form onSubmit={handleSubmit}>
                 <Field name="email" placeholder="Email" component={InputField} />
                 <Field name="firstName" placeholder="First Name" component={InputField} />
@@ -69,7 +70,9 @@ const register: React.FC = () => {
                   type="password"
                   component={InputField}
                 />
-                <button type="submit">Submit</button>
+                <button type="submit" disabled={isSubmitting}>
+                  Submit
+                </button>
               </form>
             )}
           </Formik>
