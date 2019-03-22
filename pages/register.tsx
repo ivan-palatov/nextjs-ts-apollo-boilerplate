@@ -1,8 +1,31 @@
 import { Field, Formik } from 'formik';
 import React from 'react';
+import * as yup from 'yup';
 import InputField from '../components/fields/InputField';
 import Layout from '../components/Layout';
 import { RegisterComponent } from '../generated/apolloComponents';
+
+const RegisterSchema = yup.object().shape({
+  email: yup
+    .string()
+    .email()
+    .required(),
+  firstName: yup
+    .string()
+    .min(2)
+    .max(255)
+    .required(),
+  lastName: yup
+    .string()
+    .min(2)
+    .max(255)
+    .required(),
+  password: yup
+    .string()
+    .min(6)
+    .max(75)
+    .required(),
+});
 
 const register: React.FC = () => {
   return (
@@ -10,9 +33,23 @@ const register: React.FC = () => {
       <RegisterComponent>
         {register => (
           <Formik
-            onSubmit={async data => {
-              const res = await register({ variables: data });
-              console.log(res);
+            validationSchema={RegisterSchema}
+            validateOnBlur={false}
+            onSubmit={async (data, { setErrors }) => {
+              try {
+                const res = await register({ variables: data });
+                console.log(res);
+              } catch (err) {
+                const errors = err.graphQLErrors[0].extensions.exception.validationErrors.reduce(
+                  (obj: any, err: any) => {
+                    obj[err.property] = Object.values(err.constraints)[0];
+                    return obj;
+                  },
+                  {}
+                );
+                setErrors(errors);
+                console.log(errors);
+              }
             }}
             initialValues={{
               email: '',

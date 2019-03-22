@@ -6,10 +6,18 @@ type InputProps = React.DetailedHTMLProps<
   HTMLInputElement
 >;
 
-const InputField: React.FC<FieldProps & InputProps> = ({ field, form, ...props }) => (
-  <div>
-    <input {...field} {...props} />
-  </div>
-);
+const InputField: React.FC<FieldProps & InputProps> = ({
+  field,
+  form: { errors, touched },
+  ...props
+}) => {
+  const errorMessage = touched[field.name] && errors[field.name];
+  return (
+    <div>
+      <input {...field} {...props} />
+      {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
+    </div>
+  );
+};
 
 export default InputField;
