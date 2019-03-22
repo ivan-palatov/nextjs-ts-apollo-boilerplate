@@ -4,22 +4,12 @@ import React from 'react';
 import * as yup from 'yup';
 import InputField from '../components/fields/InputField';
 import Layout from '../components/Layout';
-import { RegisterComponent } from '../generated/apolloComponents';
+import { LoginComponent } from '../generated/apolloComponents';
 
-const RegisterSchema = yup.object().shape({
+const LoginSchema = yup.object().shape({
   email: yup
     .string()
     .email()
-    .required(),
-  firstName: yup
-    .string()
-    .min(2)
-    .max(255)
-    .required(),
-  lastName: yup
-    .string()
-    .min(2)
-    .max(255)
     .required(),
   password: yup
     .string()
@@ -28,42 +18,31 @@ const RegisterSchema = yup.object().shape({
     .required(),
 });
 
-const register: React.FC = () => {
+const login: React.FC = () => {
   return (
-    <Layout title="Register Page">
-      <RegisterComponent>
-        {register => (
+    <Layout title="Login Page">
+      <LoginComponent>
+        {login => (
           <Formik
-            validationSchema={RegisterSchema}
+            validationSchema={LoginSchema}
             validateOnBlur={false}
             onSubmit={async (data, { setErrors, setSubmitting }) => {
               try {
-                await register({ variables: data });
-                Router.push('/user/check-email');
+                await login({ variables: data });
+                Router.push('/');
               } catch (err) {
-                const errors = err.graphQLErrors[0].extensions.exception.validationErrors.reduce(
-                  (obj: any, err: any) => {
-                    obj[err.property] = Object.values(err.constraints)[0];
-                    return obj;
-                  },
-                  {}
-                );
-                setErrors(errors);
+                setErrors({ email: 'Invalid email or password' });
               }
               setSubmitting(false);
             }}
             initialValues={{
               email: '',
-              firstName: '',
-              lastName: '',
               password: '',
             }}
           >
             {({ handleSubmit, isSubmitting }) => (
               <form onSubmit={handleSubmit}>
                 <Field name="email" placeholder="Email" component={InputField} />
-                <Field name="firstName" placeholder="First Name" component={InputField} />
-                <Field name="lastName" placeholder="Last Name" component={InputField} />
                 <Field
                   name="password"
                   placeholder="Password"
@@ -71,15 +50,15 @@ const register: React.FC = () => {
                   component={InputField}
                 />
                 <button type="submit" disabled={isSubmitting}>
-                  Register
+                  Login
                 </button>
               </form>
             )}
           </Formik>
         )}
-      </RegisterComponent>
+      </LoginComponent>
     </Layout>
   );
 };
 
-export default register;
+export default login;
