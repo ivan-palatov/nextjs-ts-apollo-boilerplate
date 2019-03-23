@@ -5,7 +5,8 @@ import React from 'react';
 import * as yup from 'yup';
 import InputField from '../components/fields/InputField';
 import Layout from '../components/Layout';
-import { LoginComponent } from '../generated/apolloComponents';
+import { LoginComponent, MeQuery } from '../generated/apolloComponents';
+import { meQuery } from '../graphql/user/queries/me';
 
 const LoginSchema = yup.object().shape({
   email: yup
@@ -29,7 +30,20 @@ const login = () => {
             validateOnBlur={false}
             onSubmit={async (data, { setErrors, setSubmitting }) => {
               try {
-                await loginMutation({ variables: data });
+                await loginMutation({
+                  variables: data,
+                  update: (cache, { data: loginData }) => {
+                    if (!loginData || !loginData.login) {
+                      return;
+                    }
+                    cache.writeQuery<MeQuery>({
+                      query: meQuery,
+                      data: {
+                        me: loginData.login,
+                      },
+                    });
+                  },
+                });
                 Router.push('/');
               } catch (err) {
                 console.log(Object.entries(err));
