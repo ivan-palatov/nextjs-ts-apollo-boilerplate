@@ -181,6 +181,28 @@ export type RegisterRegister = {
   fullName: string;
 };
 
+export type MeVariables = {};
+
+export type MeQuery = {
+  __typename?: "Query";
+
+  me: MeMe;
+};
+
+export type MeMe = {
+  __typename?: "User";
+
+  id: string;
+
+  email: string;
+
+  fullName: string;
+
+  firstName: string;
+
+  lastName: string;
+};
+
 import gql from "graphql-tag";
 import * as React from "react";
 import * as ReactApollo from "react-apollo";
@@ -346,4 +368,48 @@ export function RegisterHOC<TProps, TChildProps = any>(
     RegisterVariables,
     RegisterProps<TChildProps>
   >(RegisterDocument, operationOptions);
+}
+export const MeDocument = gql`
+  query Me {
+    me {
+      id
+      email
+      fullName
+      firstName
+      lastName
+    }
+  }
+`;
+export class MeComponent extends React.Component<
+  Partial<ReactApollo.QueryProps<MeQuery, MeVariables>>
+> {
+  render() {
+    return (
+      <ReactApollo.Query<MeQuery, MeVariables>
+        query={MeDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type MeProps<TChildProps = any> = Partial<
+  ReactApollo.DataProps<MeQuery, MeVariables>
+> &
+  TChildProps;
+export function MeHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        MeQuery,
+        MeVariables,
+        MeProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    MeQuery,
+    MeVariables,
+    MeProps<TChildProps>
+  >(MeDocument, operationOptions);
 }
