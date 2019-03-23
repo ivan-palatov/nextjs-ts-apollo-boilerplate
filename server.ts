@@ -2,7 +2,7 @@ import * as express from 'express';
 import * as next from 'next';
 
 const dev = process.env.NODE_ENV !== 'production';
-const port = parseInt(process.env.PORT!) || 3000;
+const port = parseInt(process.env.PORT!, 10) || 3000;
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
@@ -15,12 +15,18 @@ app
       return app.render(req, res, '/user/confirm', { token: req.params.token });
     });
 
+    server.get('/user/change-password/:token', (req, res) => {
+      return app.render(req, res, '/user/change-password', { token: req.params.token });
+    });
+
     server.get('*', (req, res) => {
       return handle(req, res);
     });
 
     server.listen(port, (err: any) => {
-      if (err) throw err;
+      if (err) {
+        throw err;
+      }
       console.log(`> Ready on http://localhost:${port}`);
     });
   })

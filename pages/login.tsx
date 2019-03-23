@@ -1,4 +1,5 @@
 import { Field, Formik } from 'formik';
+import Link from 'next/link';
 import Router from 'next/router';
 import React from 'react';
 import * as yup from 'yup';
@@ -31,7 +32,8 @@ const login = () => {
                 await loginMutation({ variables: data });
                 Router.push('/');
               } catch (err) {
-                setErrors({ email: 'Invalid email or password' });
+                console.log(Object.entries(err));
+                setErrors({ email: 'Invalid credentials or email is not confirmed' });
               }
               setSubmitting(false);
             }}
@@ -49,6 +51,14 @@ const login = () => {
                   type="password"
                   component={InputField}
                 />
+                <p>
+                  <small>
+                    Forgot password?{' '}
+                    <Link href="/user/forgot-password">
+                      <a>Change Password</a>
+                    </Link>
+                  </small>
+                </p>
                 <button type="submit" disabled={isSubmitting}>
                   Login
                 </button>
