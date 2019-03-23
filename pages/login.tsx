@@ -18,7 +18,7 @@ const LoginSchema = yup.object().shape({
     .required(),
 });
 
-const login: React.FC = () => {
+const login = () => {
   return (
     <Layout title="Login Page">
       <LoginComponent>

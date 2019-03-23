@@ -59,7 +59,7 @@ function onSubmitHandler(registerMutation: MutationFn<RegisterMutation, Register
   };
 }
 
-const register: React.FC = () => {
+const register = () => {
   return (
     <Layout title="Register Page">
       <RegisterComponent>

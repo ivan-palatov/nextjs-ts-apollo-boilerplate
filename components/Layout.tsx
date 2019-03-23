@@ -6,10 +6,7 @@ interface IProps {
   title?: string;
 }
 
-const Layout: React.FunctionComponent<IProps> = ({
-  children,
-  title = 'This is the default title',
-}) => (
+const Layout: React.FC<IProps> = ({ children, title = 'This is the default title' }) => (
   <div>
     <Head>
       <title>{title}</title>
@@ -28,10 +25,6 @@ const Layout: React.FunctionComponent<IProps> = ({
         |{' '}
         <Link href="/register">
           <a>Register</a>
-        </Link>{' '}
-        |{' '}
-        <Link href="/user/confirm?token=124124rdasfa" as="/user/confirm/124124rdasfa">
-          <a>Confirm Email(Test link)</a>
         </Link>{' '}
         |{' '}
       </nav>
