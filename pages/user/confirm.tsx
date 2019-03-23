@@ -1,7 +1,7 @@
 import React from 'react';
 import { ConfirmEmailMutation, ConfirmEmailVariables } from '../../generated/apolloComponents';
 import { confirmEmail } from '../../graphql/user/mutations/confirmEmail';
-import { MyContext } from '../../interfaces/MyContext';
+import { IMyContext } from '../../interfaces/MyContext';
 import redirect from '../../lib/redirect';
 
 interface IToken {
@@ -9,7 +9,7 @@ interface IToken {
 }
 
 class Confirm extends React.Component<IToken> {
-  static async getInitialProps({ query: { token }, apolloClient, ...ctx }: MyContext) {
+  static async getInitialProps({ query: { token }, apolloClient, ...ctx }: IMyContext) {
     if (!token) {
       return {};
     }

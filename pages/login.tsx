@@ -22,13 +22,13 @@ const login: React.FC = () => {
   return (
     <Layout title="Login Page">
       <LoginComponent>
-        {login => (
+        {loginMutation => (
           <Formik
             validationSchema={LoginSchema}
             validateOnBlur={false}
             onSubmit={async (data, { setErrors, setSubmitting }) => {
               try {
-                await login({ variables: data });
+                await loginMutation({ variables: data });
                 Router.push('/');
               } catch (err) {
                 setErrors({ email: 'Invalid email or password' });

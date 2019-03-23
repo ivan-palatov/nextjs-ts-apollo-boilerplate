@@ -1,31 +1,11 @@
-import Link from 'next/link';
 import * as React from 'react';
 import Layout from '../components/Layout';
-import { LoginComponent } from '../generated/apolloComponents';
 
-const IndexPage: React.FunctionComponent = () => {
+const IndexPage: React.FC = () => {
   return (
-    <Layout title="Home | Next.js + TypeScript Example">
+    <Layout title="Home | Main Page">
       <h1>Hello Next.js 👋</h1>
-      <p>
-        <Link href="/about">
-          <a>About</a>
-        </Link>
-      </p>
-      <LoginComponent>
-        {mutate => (
-          <button
-            onClick={async () => {
-              const res = await mutate({
-                variables: { email: 'test4@mail.com', password: 'hihihi' },
-              });
-              console.log(res);
-            }}
-          >
-            Login
-          </button>
-        )}
-      </LoginComponent>
+      <h3>Main Page</h3>
     </Layout>
   );
 };

@@ -2,11 +2,11 @@ import Head from 'next/head';
 import Link from 'next/link';
 import * as React from 'react';
 
-type Props = {
+interface IProps {
   title?: string;
-};
+}
 
-const Layout: React.FunctionComponent<Props> = ({
+const Layout: React.FunctionComponent<IProps> = ({
   children,
   title = 'This is the default title',
 }) => (
@@ -22,13 +22,22 @@ const Layout: React.FunctionComponent<Props> = ({
           <a>Home</a>
         </Link>{' '}
         |{' '}
+        <Link href="/login">
+          <a>Login</a>
+        </Link>{' '}
+        |{' '}
+        <Link href="/register">
+          <a>Register</a>
+        </Link>{' '}
+        |{' '}
         <Link href="/user/confirm?token=124124rdasfa" as="/user/confirm/124124rdasfa">
-          <a>Confirm Email</a>
+          <a>Confirm Email(Test link)</a>
         </Link>{' '}
         |{' '}
       </nav>
+      <hr />
     </header>
-    {children}
+    <main>{children}</main>
     <footer>
       <hr />
       <span>I'm here to stay (Footer)</span>
