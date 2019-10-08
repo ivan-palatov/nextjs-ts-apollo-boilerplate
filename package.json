@@ -39,7 +39,7 @@
     "@types/yup": "^0.26.12",
     "graphql-code-generator": "^0.18.0",
     "graphql-codegen-typescript-client": "^0.18.0",
-    "graphql-codegen-typescript-common": "^0.18.0",
+    "graphql-codegen-typescript-common": "^0.18.2",
     "graphql-codegen-typescript-react-apollo": "^0.18.0",
     "ts-node-dev": "^1.0.0-pre.32",
     "tslint": "^5.14.0",
