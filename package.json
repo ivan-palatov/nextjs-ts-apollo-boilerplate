@@ -42,7 +42,7 @@
     "graphql-codegen-typescript-common": "^0.18.0",
     "graphql-codegen-typescript-react-apollo": "^0.18.0",
     "ts-node-dev": "^1.0.0-pre.32",
-    "tslint": "^5.14.0",
+    "tslint": "^5.20.0",
     "tslint-config-prettier": "^1.18.0",
     "tslint-react": "^4.1.0",
     "typescript": "3.3.4000"
