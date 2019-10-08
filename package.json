@@ -13,7 +13,7 @@
     "@zeit/next-typescript": "^1.1.1",
     "apollo-boost": "^0.3.1",
     "apollo-link-context": "^1.0.19",
-    "apollo-link-error": "^1.1.10",
+    "apollo-link-error": "^1.1.12",
     "apollo-link-http": "^1.5.14",
     "cookie": "^0.3.1",
     "cross-env": "^5.2.0",
@@ -44,7 +44,7 @@
     "ts-node-dev": "^1.0.0-pre.32",
     "tslint": "^5.14.0",
     "tslint-config-prettier": "^1.18.0",
-    "tslint-react": "^3.6.0",
+    "tslint-react": "^4.1.0",
     "typescript": "3.3.4000"
   },
   "license": "ISC"
