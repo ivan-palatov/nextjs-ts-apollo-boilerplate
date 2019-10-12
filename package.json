@@ -38,7 +38,7 @@
     "@types/react-dom": "16.8.3",
     "@types/yup": "^0.26.24",
     "graphql-code-generator": "^0.18.0",
-    "graphql-codegen-typescript-client": "^0.18.0",
+    "graphql-codegen-typescript-client": "^0.18.2",
     "graphql-codegen-typescript-common": "^0.18.2",
     "graphql-codegen-typescript-react-apollo": "^0.18.2",
     "ts-node-dev": "^1.0.0-pre.32",
